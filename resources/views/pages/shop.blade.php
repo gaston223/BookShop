@@ -2,8 +2,6 @@
 
 @section('title', 'Vos livres préférés aux meilleurs prix')
 <?php
-$products = \Illuminate\Support\Facades\DB::table('products')
-    ->get();
 ?>
 @section('content')
     <!-- End Search Popup -->
