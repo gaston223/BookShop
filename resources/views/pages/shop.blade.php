@@ -43,6 +43,7 @@
             </div>
         </div>
         <!-- End Single Slide -->
+
     </div>
     <!-- End Slider area -->
     <!-- Start BEst Seller Area -->
