@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\Admin\AdminController;
+use App\Http\Controllers\Admin\ProductsController;
 use App\Http\Controllers\ShopController;
 use Illuminate\Support\Facades\Route;
 
@@ -21,4 +23,5 @@ Route::get('/checkout', 'ShopController@checkout')->name('shop_checkout');
 Route::get('/product_single', 'ShopController@productSingle')->name('shop_product_single');
 
 
-Route::get('/admin', 'AdminController@admin')->name('admin');
+Route::get('/admin', [AdminController::class, 'dashboard'])->name('dashboard');
+Route::get('/create-product', [ProductsController::class, 'create'])->name('create_product');
