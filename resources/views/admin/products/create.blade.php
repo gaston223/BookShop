@@ -13,23 +13,34 @@
                             <h2>Créer un Produit</h2>
                         </div>
                         <div class="card-body">
-                            <form >
+                            <form method="post">
                                 <div class="form-row">
                                     <div class="col-md-12 mb-3">
-                                        <label for="validationServer01">First name</label>
-                                        <input type="text" class="form-control is-valid" id="validationServer01" placeholder="First name" value="Md"
-                                               required>
-                                        <div class="valid-feedback">
+                                        <label for="validationServer01">Nom du Produit</label>
+                                        <!--is-valid-->
+                                        <input type="text" class="form-control " id="validationServer01" placeholder="Saisissez le nom du produit" value=""
+                                               name="product" required>
+                                        {{--<div class="valid-feedback">
                                             Looks good!
-                                        </div>
+                                        </div>--}}
+
                                     </div>
                                     <div class="col-md-12 mb-3">
+                                        <label for="validationServer01">Prix du Produit</label>
+                                        <!--is-valid-->
+                                        <input type="number" class="form-control " id="validationServer01" placeholder="Saisissez le prix du produit" value=""
+                                              name="price" required>
+                                        {{--<div class="valid-feedback">
+                                            Looks good!
+                                        </div>--}}
+                                    </div>
+                                   {{-- <div class="col-md-12 mb-3">
                                         <label for="validationServer02">Last name</label>
                                         <input type="text" class="form-control is-valid" id="validationServer02" placeholder="Last name" value="Rahad"
                                                required>
-                                        <div class="valid-feedback">
+                                        --}}{{--<div class="valid-feedback">
                                             Looks good!
-                                        </div>
+                                        </div>--}}{{--
                                     </div>
                                     <div class="col-md-12 mb-3">
                                         <label for="validationServerUsername">Username</label>
@@ -38,9 +49,9 @@
                                         <div class="invalid-feedback">
                                             Please choose a username.
                                         </div>
-                                    </div>
+                                    </div>--}}
                                 </div>
-                                <div class="form-row">
+                             {{--   <div class="form-row">
                                     <div class="col-md-6 mb-3">
                                         <label for="validationServer03">City</label>
                                         <input type="text" class="form-control is-invalid" id="validationServer03" placeholder="City" required>
@@ -62,7 +73,7 @@
                                             Please provide a valid zip.
                                         </div>
                                     </div>
-                                </div>
+                                </div>--}}
                                 <button class="btn btn-primary" type="submit">Submit form</button>
                             </form>
                         </div>
@@ -70,9 +81,5 @@
                 </div>
             </div>
         </div>
-
-
-
-
     </div>
 @endsection

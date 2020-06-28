@@ -62,26 +62,21 @@
                     <a class="sidenav-item-link" href="javascript:void(0)" data-toggle="collapse" data-target="#categories"
                        aria-expanded="false" aria-controls="categories">
                         <i class="mdi mdi-sitemap"></i>
-
                         <span class="nav-text">Catégories</span> <b class="caret"></b>
                     </a>
-                    <ul  class="collapse"  id="categories"
+                    <ul class="collapse" id="categories"
                          data-parent="#sidebar-menu">
                         <div class="sub-menu">
-
-                            <li  class="active" >
+                            <li class="active" >
                                 <a class="sidenav-item-link" href="#">
                                     <span class="nav-text">Toutes les catégories</span>
                                 </a>
                             </li>
-
-                            <li >
-                                <a class="sidenav-item-link" href="#">
+                            <li>
+                                <a class="sidenav-item-link" href="{{route('create_category')}}">
                                     <span class="nav-text">Ajouter une Catégorie</span>
                                 </a>
                             </li>
-
-
                         </div>
                     </ul>
                 </li>
