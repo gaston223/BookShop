@@ -1,8 +1,9 @@
 @extends('layouts.app')
 
 @section('title', 'Vos livres préférés aux meilleurs prix')
-<?php
-?>
+
+
+
 @section('content')
     <!-- End Search Popup -->
     <!-- Start Slider area -->
@@ -10,6 +11,12 @@
         <!-- Start Single Slide -->
         <div class="slide animation__style10 bg-image--1 fullscreen align__center--left">
             <div class="container">
+                @if(session('success'))
+                    <div class="alert  alert-dismissible alert-success">
+                        <button type="button" class="close" data-dismiss="alert">&times;</button>
+                        {{session('success')}}
+                    </div>
+                @endif
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="slider__content">
@@ -65,8 +72,8 @@
                 @foreach($products as $product)
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mt-5">
                         <div class="product__thumb">
-                            <a class="first__img" href="single-product.html"><img src="{{asset('images/'.$product->image)}}" alt="product image"></a>
-                            <a class="second__img animation1" href="single-product.html"><img src="{{asset('images/'.$product->image)}}" alt="product image"></a>
+                            <a class="first__img" href="{{route('shop_product_single', $product->slug)}}"><img src="{{asset('images/'.$product->image)}}" alt="product image"></a>
+                            <a class="second__img animation1" href="{{route('shop_product_single', $product->slug)}}"><img src="{{asset('images/'.$product->image)}}" alt="product image"></a>
                             <div class="hot__box">
                                 <span class="hot-label">BEST SALLER</span>
                             </div>
@@ -74,8 +81,8 @@
                         <div class="product__content content--center">
                             <h4><a href="single-product.html">{{$product->name}}</a></h4>
                             <ul class="prize d-flex">
-                                <li>$35.00</li>
-                                <li class="old_prize">$35.00</li>
+                                <li>{{$product->price}} €</li>
+                                <li class="old_prize">{{$product->old_price}} €</li>
                             </ul>
                             <div class="action">
                                 <div class="actions_inner">

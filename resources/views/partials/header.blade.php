@@ -4,7 +4,7 @@
             <div class="col-md-6 col-sm-6 col-6 col-lg-2">
                 <div class="logo">
                     <a href="{{route('shop_home')}}">
-                        <img src="images/logo/logo.png" alt="logo images">
+                        <img src="{{asset('images/logo/logo.png')}}" alt="logo images">
                     </a>
                 </div>
             </div>
@@ -17,7 +17,7 @@
                                 <ul class="item item03">
                                     <li class="title">Shop Layout</li>
                                     <li><a href="shop-grid.html">Shop Grid</a></li>
-                                    <li><a href="{{route('shop_product_single')}}">Single Product</a></li>
+                                    <li><a href="#">Single Product</a></li>
                                 </ul>
                                 <ul class="item item03">
                                     <li class="title">Shop Page</li>
@@ -38,7 +38,7 @@
                 <ul class="header__sidebar__right d-flex justify-content-end align-items-center">
                     <li class="shop_search"><a class="search__active" href="#"></a></li>
                     <li class="wishlist"><a href="#"></a></li>
-                    <li class="shopcart"><a class="cartbox_active" href="#"><span class="product_qun">3</span></a>
+                    <li class="shopcart"><a class="cartbox_active" href="#"><span class="product_qun">{{Cart::count()}}</span></a>
                         <!-- Start Shopping Cart -->
                         <div class="block-minicart minicart__active">
                             <div class="minicart-content-wrapper">
@@ -97,7 +97,7 @@
                                                 <h6><a href="product-details.html">Compete Track Tote</a></h6>
                                                 <span class="prize">$40.00</span>
                                                 <div class="product_prize d-flex justify-content-between">
-                                                    <span class="qun">Qty: 03</span>
+                                                    <span class="qun"></span>
                                                     <ul class="d-flex justify-content-end">
                                                         <li><a href="#"><i class="zmdi zmdi-settings"></i></a></li>
                                                         <li><a href="#"><i class="zmdi zmdi-delete"></i></a></li>

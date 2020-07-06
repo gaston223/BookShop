@@ -3,8 +3,12 @@
 namespace App\Http\Controllers;
 
 use App\Products;
+use Gloudemans\Shoppingcart\Facades\Cart;
+use Illuminate\Contracts\Foundation\Application;
+use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use Illuminate\View\View;
 
 class ShopController extends Controller
 {
@@ -17,12 +21,18 @@ class ShopController extends Controller
 
         return view('layouts.app')->with('pages.index', $products_shop);*/
 
+        //dd(Cart::content());
         return view('pages.shop')->with('products', $products = Products::all());
     }
 
-    public function productSingle()
+    /**
+     * @param Products $product
+     * @return Application|Factory|View
+     */
+    public function showProductSingle(Products $product)
     {
-        return view('pages.product_single');
+        //$product = Products::where('slug', $slug)->first();
+        return view('pages.product_single', ['product' => $product]);
     }
 
     public function cart()
