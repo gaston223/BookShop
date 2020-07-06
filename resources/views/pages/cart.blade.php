@@ -27,7 +27,6 @@
         <div class="container">
             <div class="row">
                 <div class="col-md-12 col-sm-12 ol-lg-12">
-                    <form action="#">
                         <div class="table-content wnro__table table-responsive">
                             <table>
                                 <thead>
@@ -41,34 +40,30 @@
                                 </tr>
                                 </thead>
                                 <tbody>
-                                <tr>
-                                    <td class="product-thumbnail"><a href="#"><img src="images/product/sm-3/1.jpg" alt="product img"></a></td>
-                                    <td class="product-name"><a href="#">Natoque penatibus</a></td>
-                                    <td class="product-price"><span class="amount">$165.00</span></td>
-                                    <td class="product-quantity"><input type="number" value="1"></td>
-                                    <td class="product-subtotal">$165.00</td>
-                                    <td class="product-remove"><a href="#">X</a></td>
-                                </tr>
-                                <tr>
-                                    <td class="product-thumbnail"><a href="#"><img src="images/product/sm-3/2.jpg" alt="product img"></a></td>
-                                    <td class="product-name"><a href="#">Quisque fringilla</a></td>
-                                    <td class="product-price"><span class="amount">$50.00</span></td>
-                                    <td class="product-quantity"><input type="number" value="1"></td>
-                                    <td class="product-subtotal">$50.00</td>
-                                    <td class="product-remove"><a href="#">X</a></td>
-                                </tr>
-                                <tr>
-                                    <td class="product-thumbnail"><a href="#"><img src="images/product/sm-3/3.jpg" alt="product img"></a></td>
-                                    <td class="product-name"><a href="#">Vestibulum suscipit</a></td>
-                                    <td class="product-price"><span class="amount">$50.00</span></td>
-                                    <td class="product-quantity"><input type="number" value="1"></td>
-                                    <td class="product-subtotal">$50.00</td>
-                                    <td class="product-remove"><a href="#">X</a></td>
-                                </tr>
+                                @if(Cart::count() > 0)
+                                @foreach(Cart::content() as  $product)
+                                    @dump($product->rowId)
+                                    <tr>
+                                        <td class="product-thumbnail"><a href="#"><img src="{{asset('images/'.$product->model->image)}}" alt="product img"></a></td>
+                                        <td class="product-name"><a href="#">{{$product->model->name}}</a></td>
+                                        <td class="product-price"><span class="amount">{{$product->model->price}}</span></td>
+                                        <td class="product-quantity"><input type="number" value="1"></td>
+                                        <td class="product-subtotal">$165.00</td>
+                                        <td class="product-remove">
+                                            <form action="{{ route('cart.destroy', $product->rowId)}}" method="POST">
+                                                @csrf
+                                                @method('DELETE')
+                                                <button type="submit">X</button><i class="zmdi zmdi-delete" style="color: #0b0e19; font-size: 1.2rem; line-height: 0"></i>
+                                            </form>
+
+                                        </td>
+                                    </tr>
+
+                                @endforeach
                                 </tbody>
                             </table>
                         </div>
-                    </form>
+
                     <div class="cartbox__btn">
                         <ul class="cart__btn__list d-flex flex-wrap flex-md-nowrap flex-lg-nowrap justify-content-between">
                             <li><a href="#">Coupon Code</a></li>
@@ -104,12 +99,16 @@
             </div>
 
 
-                <ul class=" pt-3 float-right cart__btn__list d-flex flex-wrap flex-md-nowrap flex-lg-nowrap justify-content-between">
-                    <li ><a href="{{route('shop_checkout')}}" style="background: #e59285; color: white">Procéder au paiement</a></li>
-                </ul>
+            <ul class=" pt-3 float-right cart__btn__list d-flex flex-wrap flex-md-nowrap flex-lg-nowrap justify-content-between">
+                <li ><a href="{{route('shop_checkout')}}" style="background: #e59285; color: white">Procéder au paiement</a></li>
+            </ul>
 
         </div>
     </div>
     <!-- cart-main-area end -->
-
+    @else
+    <div>
+        Votre panier est vide.
+    </div>
+    @endif
 @endsection

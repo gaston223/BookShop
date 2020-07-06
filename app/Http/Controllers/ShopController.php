@@ -3,25 +3,14 @@
 namespace App\Http\Controllers;
 
 use App\Products;
-use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
-use Illuminate\Http\Request;
-use Illuminate\Support\Facades\DB;
 use Illuminate\View\View;
 
 class ShopController extends Controller
 {
     public function home()
     {
-      /* $products = DB::table('products')
-            ->get(); */
-        /* $products_shop = view('pages.index')
-            ->with('products', $products);
-
-        return view('layouts.app')->with('pages.index', $products_shop);*/
-
-        //dd(Cart::content());
         return view('pages.shop')->with('products', $products = Products::all());
     }
 
