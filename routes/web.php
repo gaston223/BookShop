@@ -20,7 +20,7 @@ use Illuminate\Support\Facades\Route;
 
 Route::get('/', 'ShopController@home')->name('shop_home');
 Route::get('/wishlist', 'ShopController@wishlist')->name('shop_wishlist');
-Route::get('/checkout', 'ShopController@checkout')->name('shop_checkout');
+
 Route::get('/product_single/{product}', 'ShopController@showProductSingle')->name('shop_product_single');
 
 
@@ -37,3 +37,7 @@ Route::delete('/cart/{id}/', 'CartController@destroy')->name('cart.destroy');
 Route::get('/vide-panier', function (){
     Cart::destroy();
 });
+
+
+//Routes Paiement
+Route::get('/checkout', 'CheckoutController@index')->name('shop_checkout');

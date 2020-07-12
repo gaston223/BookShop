@@ -219,15 +219,16 @@
                 </div>
                 <div class="col-lg-6 col-12 md-mt-40 sm-mt-40">
                     <div class="wn__order__box">
+
                         <h3 class="onder__title">Your order</h3>
                         <ul class="order__total">
                             <li>Product</li>
                             <li>Total</li>
                         </ul>
+
+
                         <ul class="order_product">
-                            <li>Buscipit at magna × 1<span>$48.00</span></li>
-                            <li>Buscipit at magna × 1<span>$48.00</span></li>
-                            <li>Buscipit at magna × 1<span>$48.00</span></li>
+
                             <li>Buscipit at magna × 1<span>$48.00</span></li>
                         </ul>
                         <ul class="shipping__method">
@@ -248,6 +249,17 @@
                         <ul class="total__amount">
                             <li>Order Total <span>$223.00</span></li>
                         </ul>
+
+                        <form action="" class="my-4">
+                            <div id="card-element">
+                                <!-- Elements will create input elements here -->
+                            </div>
+
+                            <!-- We'll put the error messages in this element -->
+                            <div id="card-errors" role="alert"></div>
+
+                            <button class="btn btn-success mt-4 " id="submit">Procéder au paiement</button>
+                        </form>
                     </div>
                     <div id="accordion" class="checkout_accordion mt--30" role="tablist">
                         <div class="payment">
@@ -297,4 +309,60 @@
         </div>
     </section>
     <!-- End Checkout Area -->
+@endsection
+@section('scripts')
+    <script src="https://js.stripe.com/v3/"></script>
+
+    <script>
+        // Set your publishable key: remember to change this to your live publishable key in production
+        // See your keys here: https://dashboard.stripe.com/account/apikeys
+        var stripe = Stripe('pk_test_51H2h8rFJdwGaW11fResjPaQ8ErBNk2PQjDDDP31SvFSjSw39zhAY21SS4EKsgVDJeO6sryo1J8EaJbPtsUmSSjRZ00GK6Et3k3');
+        var elements = stripe.elements();
+        // Set up Stripe.js and Elements to use in checkout form
+        var style = {
+            base: {
+                color: "#32325d",
+            }
+        };
+        var card = elements.create("card", { style: style });
+        card.mount("#card-element");
+
+        card.addEventListener('change', ({error}) => {
+            const displayError = document.getElementById('card-errors');
+            if (error) {
+                displayError.classList.add('alert', 'alert-warning', 'mt-3');
+                displayError.textContent = error.message;
+            } else {
+                displayError.classList.remove('alert', 'alert-warning', 'mt-3');
+                displayError.textContent = '';
+            }
+        });
+
+        var submitButton = document.getElementById('submit');
+        submitButton .addEventListener('click', function(ev) {
+            ev.preventDefault();
+            stripe.confirmCardPayment("{{ $clientSecret }}", {
+                payment_method: {
+                    card: card,
+                }
+            }).then(function(result) {
+                if (result.error) {
+                    // Show error to your customer (e.g., insufficient funds)
+                    console.log(result.error.message);
+                } else {
+                    // The payment has been processed!
+                    if (result.paymentIntent.status === 'succeeded') {
+                        // Show a success message to your customer
+                        // There's a risk of the customer closing the window before callback
+                        // execution. Set up a webhook or plugin to listen for the
+                        // payment_intent.succeeded event that handles any business critical
+                        // post-payment actions.
+                        console.log(result.paymentIntent);
+                    }
+                }
+            });
+        });
+
+
+    </script>
 @endsection

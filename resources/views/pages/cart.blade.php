@@ -35,25 +35,26 @@
                                     <th class="product-name">Product</th>
                                     <th class="product-price">Price</th>
                                     <th class="product-quantity">Quantity</th>
-                                    <th class="product-subtotal">Total</th>
+{{--                                    <th class="product-subtotal">Total</th>--}}
                                     <th class="product-remove">Remove</th>
                                 </tr>
                                 </thead>
                                 <tbody>
                                 @if(Cart::count() > 0)
                                 @foreach(Cart::content() as  $product)
-                                    @dump($product->rowId)
                                     <tr>
                                         <td class="product-thumbnail"><a href="#"><img src="{{asset('images/'.$product->model->image)}}" alt="product img"></a></td>
                                         <td class="product-name"><a href="#">{{$product->model->name}}</a></td>
-                                        <td class="product-price"><span class="amount">{{$product->model->price}}</span></td>
+                                        <td class="product-price"><span class="amount">{{$product->model->price}} €</span></td>
                                         <td class="product-quantity"><input type="number" value="1"></td>
-                                        <td class="product-subtotal">$165.00</td>
+{{--                                        <td class="product-subtotal">{{ Cart::subtotal() }} €</td>--}}
                                         <td class="product-remove">
                                             <form action="{{ route('cart.destroy', $product->rowId)}}" method="POST">
                                                 @csrf
                                                 @method('DELETE')
-                                                <button type="submit">X</button><i class="zmdi zmdi-delete" style="color: #0b0e19; font-size: 1.2rem; line-height: 0"></i>
+                                                <button type="submit" style="padding: 0; border: none;background: none;">
+                                                    <i class="zmdi zmdi-delete" style="color: #0b0e19; font-size: 1.2rem; line-height: 0"></i>
+                                                </button>
                                             </form>
 
                                         </td>
@@ -79,17 +80,19 @@
                     <div class="cartbox__total__area">
                         <div class="cartbox-total d-flex justify-content-between">
                             <ul class="cart__total__list">
-                                <li>Cart total</li>
+{{--                                <li>Cart total</li>--}}
                                 <li>Sub Total</li>
+                                <li>TVA</li>
                             </ul>
                             <ul class="cart__total__tk">
-                                <li>$70</li>
-                                <li>$70</li>
+{{--                                <li>$70</li>--}}
+                                <li>{{Cart::subtotal()}}</li>
+                                <li>{{Cart::tax()}}€</li>
                             </ul>
                         </div>
                         <div class="cart__total__amount">
-                            <span>Grand Total</span>
-                            <span>$140</span>
+                            <span>TOTAL</span>
+                            <span>{{Cart::total()}} €</span>
                         </div>
 
                     </div>
