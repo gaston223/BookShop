@@ -6,6 +6,7 @@
     <title>BookShop | @yield('title') </title>
     <meta name="description" content="">
     <meta name="viewport" content="width=device-width, initial-scale=1">
+    @yield('extra-meta')
 
     <!-- Favicons -->
     <link rel="shortcut icon" href="{{asset('images/favicon.ico')}} images/favicon.ico">

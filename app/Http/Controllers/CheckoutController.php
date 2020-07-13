@@ -22,12 +22,17 @@ class CheckoutController extends Controller
      */
     public function index()
     {
+        if (Cart::count() <= 0){
+            return redirect()->route('shop_home');
+        }
+
         Stripe::setApiKey('sk_test_51H2h8rFJdwGaW11fl6op193HqdCwh0W6YcAvFwwDGzwlmXpOJY5UcNkOkPHnX2x3mGeVx4WwKlKK1mZdDA7RPzMx00RlvX6DSK');
         $intent = PaymentIntent::create([
             'amount' => round(Cart::total()) * 100,
             'currency' => 'eur',
+
             // Verify your integration in this guide by including this parameter
-            'metadata' => ['integration_check' => 'accept_a_payment'],
+            'metadata' => ['userId' => 19],
         ]);
         $clientSecret = Arr::get($intent, 'client_secret');
         return view('pages.checkout',['clientSecret' => $clientSecret]);
@@ -40,18 +45,21 @@ class CheckoutController extends Controller
      */
     public function create()
     {
-        //
+
     }
 
     /**
      * Store a newly created resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
-     * @return \Illuminate\Http\Response
+     * @param Request $request
+     * @return void
      */
     public function store(Request $request)
     {
-        //
+        Cart::destroy();
+        $data = $request->json()->all();
+
+        return $data['paymentIntent'];
     }
 
     /**
@@ -79,7 +87,7 @@ class CheckoutController extends Controller
     /**
      * Update the specified resource in storage.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param Request $request
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
