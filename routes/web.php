@@ -42,6 +42,4 @@ Route::get('/vide-panier', function (){
 //Routes Paiement
 Route::get('/checkout', 'CheckoutController@index')->name('shop_checkout');
 Route::post('/checkout', 'CheckoutController@store')->name('checkout_store');
-Route::get('/thanks', function (){
-    return view('pages.thank-you');
-});
+Route::get('/thanks', 'CheckoutController@thankYou')->name('checkout_thankYou');
