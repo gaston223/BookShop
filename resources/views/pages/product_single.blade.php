@@ -32,7 +32,7 @@
                             <div class="col-lg-6 col-12">
                                 <div class="wn__fotorama__wrapper">
                                     <div class="fotorama wn__fotorama__action" data-nav="thumbs">
-                                        <a href="1.jpg"><img src="{{asset('images/'.$product->image)}}" alt=""></a>
+                                        <a href="#"><img src="{{asset('images/'.$product->image)}}" alt=""></a>
                                     </div>
                                 </div>
                             </div>
@@ -57,7 +57,11 @@
                                     </div>
                                     <div class="box-tocart d-flex">
                                         <span>Qty</span>
-                                        <input id="qty" class="input-text qty" name="qty" min="1" value="1" title="Qty" type="number">
+                                        <select id="qty" data-id="{{$product->rowId}}" class="input-text qty custom-select" name="qty" min="1" value="1" title="Qty" type="number">
+                                            @for($i = 1; $i<= 6; $i++ )
+                                                <option value="{{$i}}"> {{$i}} </option>
+                                            @endfor
+                                        </select>
                                         <div class="addtocart__actions">
                                             <form action="{{route('cart.store')}}" method="POST">
                                                 @csrf
@@ -233,8 +237,8 @@
                                 <!-- Start Single Product -->
                                 <div class="product product__style--3 col-lg-4 col-md-4 col-sm-6 col-12">
                                     <div class="product__thumb">
-                                        <a class="first__img" href="single-product.html"><img src="images/books/1.jpg" alt="product image"></a>
-                                        <a class="second__img animation1" href="single-product.html"><img src="images/books/2.jpg" alt="product image"></a>
+                                        <a class="first__img" href="single-product.html"><img src="{{asset('images/books/1.jpg')}}" alt="product image"></a>
+                                        <a class="second__img animation1" href="single-product.html"><img src="{{asset('images/books/2.jpg')}}" alt="product image"></a>
                                         <div class="hot__box">
                                             <span class="hot-label">BEST SALLER</span>
                                         </div>
@@ -267,6 +271,7 @@
                                     </div>
                                 </div>
                                 <!-- Start Single Product -->
+
 
                             </div>
                         </div>
@@ -323,13 +328,6 @@
                                 <li><a href="#">Mystery</a></li>
                             </ul>
                         </aside>
-                        <aside class="wedget__categories sidebar--banner">
-                            <img src="images/others/banner_left.jpg" alt="banner images">
-                            <div class="text">
-                                <h2>new products</h2>
-                                <h6>save up to <br> <strong>40%</strong>off</h6>
-                            </div>
-                        </aside>
                     </div>
                 </div>
             </div>
@@ -353,3 +351,8 @@
     <!-- End Search Popup -->
 
 @endsection
+
+@section('scripts')
+
+@endsection
+

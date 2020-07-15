@@ -142,6 +142,8 @@
         </div>
     </div>
     <!-- END QUICKVIEW PRODUCT -->
+
+
 </div>
 <!-- //Main wrapper -->
 

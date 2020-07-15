@@ -2,6 +2,10 @@
 
 @section('title', 'Résumé de votre panier')
 
+@section('extra-meta')
+    <meta name="csrf-token" content="{{ csrf_token() }}">
+@endsection
+
 @section('content')
 
     <!-- Start Bradcaump area -->
@@ -10,7 +14,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="bradcaump__inner text-center">
-                        <h2 class="bradcaump-title">Shopping Cart</h2>
+                        <h2 class="bradcaump-title">Votre panier</h2>
                         <nav class="bradcaump-content">
                             <a class="breadcrumb_item" href="index.html">Home</a>
                             <span class="brd-separetor">/</span>
@@ -22,6 +26,21 @@
         </div>
     </div>
     <!-- End Bradcaump area -->
+<div class="container mt-4">
+    @if(session('success'))
+        <div class="alert  alert-dismissible alert-success">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{session('success')}}
+        </div>
+    @endif
+        @if(session('danger'))
+        <div class="alert  alert-dismissible alert-danger">
+            <button type="button" class="close" data-dismiss="alert">&times;</button>
+            {{session('danger')}}
+        </div>
+    @endif
+</div>
+
     <!-- cart-main-area start -->
     <div class="cart-main-area section-padding--lg bg--white">
         <div class="container">
@@ -45,8 +64,13 @@
                                     <tr>
                                         <td class="product-thumbnail"><a href="#"><img src="{{asset('images/'.$product->model->image)}}" alt="product img"></a></td>
                                         <td class="product-name"><a href="#">{{$product->model->name}}</a></td>
-                                        <td class="product-price"><span class="amount">{{$product->model->price}} €</span></td>
-                                        <td class="product-quantity"><input type="number" value="1"></td>
+                                        <td class="product-price"><span class="amount">{{$product->subtotal()}} €</span></td>
+                                        <td class="product-quantity">
+                                            <select id="qty" data-id="{{$product->rowId}}" class="input-text qty custom-select" name="qty" min="1" value="1" title="Qty" type="number">
+                                                @for($i = 1; $i<= 6; $i++ )
+                                                    <option value="{{$i}}" {{ $i == $product->qty ? 'selected' : '' }}> {{$i}} </option>
+                                                @endfor
+                                            </select></td>
 {{--                                        <td class="product-subtotal">{{ Cart::subtotal() }} €</td>--}}
                                         <td class="product-remove">
                                             <form action="{{ route('cart.destroy', $product->rowId)}}" method="POST">
@@ -114,4 +138,36 @@
         Votre panier est vide.
     </div>
     @endif
+@endsection
+
+@section('scripts')
+    <script>
+        var selects = document.querySelectorAll('#qty');
+        Array.from(selects).forEach((element)=>{
+            element.addEventListener('change', function () {
+                var rowId = this.getAttribute('data-id');
+                var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
+                fetch(
+                    `/cart/${rowId}`,
+                    {
+                        headers: {
+                            "Content-Type": "application/json",
+                            "Accept": "application/json, text-plain, */*",
+                            "X-Requested-With": "XMLHttpRequest",
+                            "X-CSRF-TOKEN": token
+                        },
+                        method: 'patch',
+                        body: JSON.stringify({
+                            qty : this.value
+                        })
+                    }
+                ).then((data) => {
+                    console.log(data);
+                    location.reload();
+                }).catch((error)=>{
+                    console.log(error)
+                })
+            });
+        })
+    </script>
 @endsection

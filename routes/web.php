@@ -34,9 +34,8 @@ Route::post('/store-category', [CategoriesController::class, 'store'])->name('st
 Route::get('/cart', 'ShopController@cart')->name('shop_cart');
 Route::post('/panier/ajouter', 'CartController@store')->name('cart.store');
 Route::delete('/cart/{id}/', 'CartController@destroy')->name('cart.destroy');
-Route::get('/vide-panier', function (){
-    Cart::destroy();
-});
+Route::patch('/cart/{rowId}', 'CartController@update')->name('cart_update');
+
 
 
 //Routes Paiement
