@@ -6,17 +6,13 @@ use Illuminate\Database\Eloquent\Model;
 
 class Products extends Model
 {
+    protected  $table = 'products';
 
-    protected $fillable = ['name', 'price', 'image', 'category_id'];
+    protected $fillable = ['name', 'price', 'image'];
     /**
      * @var mixed
      */
 
-
-    public function category()
-    {
-        return $this->belongsTo(Categories::class);
-    }
 
     public function getRouteKeyName()
     {
@@ -26,5 +22,13 @@ class Products extends Model
     public function getOldPriceAttribute()
     {
         return $this->price + 20;
+    }
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
+    public function categories()
+    {
+        return $this->belongsToMany(Categories::class, 'category_product', 'category_id', 'product_id');
     }
 }

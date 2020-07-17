@@ -59,7 +59,7 @@
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section__title text-center">
-                        <h2 class="title__be--2">New <span class="color--theme">Products</span></h2>
+                        <h2 class="title__be--2">Les Derniers <span class="color--theme">Livres</span></h2>
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered lebmid alteration in some ledmid form</p>
                     </div>
                 </div>
@@ -69,13 +69,17 @@
             <!-- Start Single Product -->
             <div class="product product__style--3 row ">
 
-                @foreach($products as $product)
+      {{--          @foreach($products as $product)
                     <div class="col-lg-3 col-md-4 col-sm-6 col-12 mt-5">
                         <div class="product__thumb">
                             <a class="first__img" href="{{route('shop_product_single', $product->slug)}}"><img src="{{asset('images/'.$product->image)}}" alt="product image"></a>
                             <a class="second__img animation1" href="{{route('shop_product_single', $product->slug)}}"><img src="{{asset('images/'.$product->image)}}" alt="product image"></a>
                             <div class="hot__box">
-                                <span class="hot-label">BEST SALLER</span>
+                                @foreach($product->categories as $category)
+                                    <span class="hot-label mb-5">{{$category->name}}</span> <br>
+
+                                @endforeach
+
                             </div>
                         </div>
                         <div class="product__content content--center">
@@ -105,7 +109,7 @@
                             </div>
                         </div>
                     </div>
-                    @endforeach
+                    @endforeach--}}
 
 
                 <!-- Start Single Product -->
@@ -117,12 +121,12 @@
     <!-- Start BEst Seller Area -->
 
     <!-- Start Best Seller Area -->
-    <section class="wn__bestseller__area bg--white pt--80  pb--30">
+    <section class="wn__bestseller__area bg--white pt--80  pb--30" id="all-books">
         <div class="container">
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section__title text-center">
-                        <h2 class="title__be--2">All <span class="color--theme">Products</span></h2>
+                        <h2 class="title__be--2">Tous vos <span class="color--theme">Livres</span></h2>
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered lebmid alteration in some ledmid form</p>
                     </div>
                 </div>
@@ -130,36 +134,40 @@
             <div class="row mt--50">
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <div class="product__nav nav justify-content-center" role="tablist">
-                        <a class="nav-item nav-link active" data-toggle="tab" href="#nav-all" role="tab">ALL</a>
-                        <a class="nav-item nav-link" data-toggle="tab" href="#nav-biographic" role="tab">BIOGRAPHIC</a>
-                        <a class="nav-item nav-link" data-toggle="tab" href="#nav-adventure" role="tab">ADVENTURE</a>
-                        <a class="nav-item nav-link" data-toggle="tab" href="#nav-children" role="tab">CHILDREN</a>
-                        <a class="nav-item nav-link" data-toggle="tab" href="#nav-cook" role="tab">COOK</a>
+                        <a class="nav-item nav-link active" data-toggle="tab" href="{{route('shop_home')}}#all-books" role="tab">ALL</a>
+                        @foreach(DB::table('categories')->get() as $category)
+                        <a class="nav-item nav-link" href="{{route('shop_home', ['categorie' => $category->slug])}}#all-books">{{$category->name}}</a>
+                        @endforeach
                     </div>
                 </div>
             </div>
             <div class="row tab__container mt--60">
                 <!-- Start Single Tab Content -->
                 <!-- Start Single Product -->
+                @foreach($products as $product)
                 <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                     <div class="product product__style--3">
                         <div class="product__thumb">
-                            <a class="first__img" href="single-product.html"><img src="images/books/1.jpg" alt="product image"></a>
-                            <a class="second__img animation1" href="single-product.html"><img src="images/books/2.jpg" alt="product image"></a>
+                            <a class="first__img" href="{{route('shop_product_single', $product->slug)}}"><img src="{{asset('images/'.$product->image)}}" alt="product image"></a>
+                            <a class="second__img animation1" href="{{route('shop_product_single', $product->slug)}}"><img src="{{asset('images/'.$product->image)}}" alt="product image"></a>
                             <div class="hot__box">
-                                <span class="hot-label">BEST SALER</span>
+                                @foreach($product->categories as $category)
+                                    <span class="hot-label mb-5">{{$category->name}}</span> <br>
+
+                                @endforeach
+
                             </div>
                         </div>
-                        <div class="product__content content--center content--center">
-                            <h4><a href="single-product.html">Ghost</a></h4>
+                        <div class="product__content content--center">
+                            <h4><a href="single-product.html">{{$product->name}}</a></h4>
                             <ul class="prize d-flex">
-                                <li>$50.00</li>
-                                <li class="old_prize">$35.00</li>
+                                <li>{{$product->price}} €</li>
+                                <li class="old_prize">{{$product->old_price}} €</li>
                             </ul>
                             <div class="action">
                                 <div class="actions_inner">
                                     <ul class="add_to_links">
-                                        <li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
+                                        <li><a class="cart" href="{{route('shop_product_single', $product->slug)}}"><i class="bi bi-shopping-bag4"></i></a></li>
                                         <li><a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a></li>
                                         <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
                                         <li><a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a></li>
@@ -178,52 +186,10 @@
                         </div>
                     </div>
                 </div>
-
-                <!-- Start Single Product -->
-                <div class="col-lg-3 col-md-4 col-sm-6 col-12">
-                    <div class="product product__style--3">
-                        <div class="product__thumb">
-                            <a class="first__img" href="single-product.html"><img src="images/books/1.jpg" alt="product image"></a>
-                            <a class="second__img animation1" href="single-product.html"><img src="images/books/2.jpg" alt="product image"></a>
-                            <div class="hot__box">
-                                <span class="hot-label">BEST SALER</span>
-                            </div>
-                        </div>
-                        <div class="product__content content--center content--center">
-                            <h4><a href="single-product.html">Ghost</a></h4>
-                            <ul class="prize d-flex">
-                                <li>$50.00</li>
-                                <li class="old_prize">$35.00</li>
-                            </ul>
-                            <div class="action">
-                                <div class="actions_inner">
-                                    <ul class="add_to_links">
-                                        <li><a class="cart" href="cart.html"><i class="bi bi-shopping-bag4"></i></a></li>
-                                        <li><a class="wishlist" href="wishlist.html"><i class="bi bi-shopping-cart-full"></i></a></li>
-                                        <li><a class="compare" href="#"><i class="bi bi-heart-beat"></i></a></li>
-                                        <li><a data-toggle="modal" title="Quick View" class="quickview modal-view detail-link" href="#productmodal"><i class="bi bi-search"></i></a></li>
-                                    </ul>
-                                </div>
-                            </div>
-                            <div class="product__hover--content">
-                                <ul class="rating d-flex">
-                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                    <li class="on"><i class="fa fa-star-o"></i></li>
-                                    <li><i class="fa fa-star-o"></i></li>
-                                    <li><i class="fa fa-star-o"></i></li>
-                                </ul>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-
-                <!-- End Single Tab Content -->
-
-
-
-
+                @endforeach
+               <!-- End Single Product -->
             </div>
+            {{$products->appends(request()->input())->fragment('all-books')->links()}}
         </div>
     </section>
     <!-- Start BEst Seller Area -->

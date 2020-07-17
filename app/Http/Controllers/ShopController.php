@@ -11,7 +11,17 @@ class ShopController extends Controller
 {
     public function home()
     {
-        return view('pages.shop')->with('products', $products = Products::all());
+
+        if(request()->categorie){
+          $products = Products::with('categories')->whereHas('categories', function ($query){
+                $query->where('slug', request()->categorie);
+            })->paginate(2);
+        }else{
+            $products = Products::with('categories')->paginate(6);
+        }
+
+
+        return view('pages.shop')->with('products', $products);
     }
 
     /**

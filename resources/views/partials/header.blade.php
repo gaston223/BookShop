@@ -11,26 +11,9 @@
             <div class="col-lg-8 d-none d-lg-block">
                 <nav class="mainmenu__nav">
                     <ul class="meninmenu d-flex justify-content-start">
-                        <li class="drop with--one--item"><a href="{{route('shop_home')}}">Home</a></li>
-                        <li class="drop"><a href="#">Shop</a>
-                            <div class="megamenu mega03">
-                                <ul class="item item03">
-                                    <li class="title">Shop Layout</li>
-                                    <li><a href="shop-grid.html">Shop Grid</a></li>
-                                    <li><a href="#">Single Product</a></li>
-                                </ul>
-                                <ul class="item item03">
-                                    <li class="title">Shop Page</li>
-                                    <li><a href="my-account.html">My Account</a></li>
-                                    <li><a href="{{route('shop_cart')}}">Cart Page</a></li>
-                                    <li><a href="{{route('shop_checkout')}}">Checkout Page</a></li>
-                                    <li><a href="{{route('shop_wishlist')}}">Wishlist Page</a></li>
-                                    <li><a href="error404.html">404 Page</a></li>
-                                </ul>
-
-                            </div>
-                        </li>
-
+                        @foreach(App\Categories::all() as $category)
+                            <li class="drop with--one--item"><a href="{{route('shop_home', ['categorie' => $category->slug])}}">{{$category->name}}</a></li>
+                        @endforeach
                     </ul>
                 </nav>
             </div>

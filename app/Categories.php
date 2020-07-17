@@ -6,10 +6,16 @@ use Illuminate\Database\Eloquent\Model;
 
 class Categories extends Model
 {
-    protected $fillable = ['name'];
+    protected  $table = 'categories';
 
+    protected $fillable = ['name', 'slug'];
+
+    /**
+     * @return \Illuminate\Database\Eloquent\Relations\BelongsToMany
+     */
     public function products()
     {
-        return $this->hasMany(Products::class);
+        return $this->belongsToMany(Products::class);
     }
+
 }
