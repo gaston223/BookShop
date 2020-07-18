@@ -2,7 +2,7 @@
 
 namespace App\Http\Controllers;
 
-use App\Products;
+use App\Product;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
@@ -47,11 +47,11 @@ class CartController extends Controller
           return redirect()->route('shop_home')->with('success', 'Le produit a déja été ajouté ');
       }
 
-        $product = Products::find($request->product_id);
+        $product = Product::find($request->product_id);
 
         Cart::add($product->id, $product->name, 1, $product->price)
-        ->associate('App\Products');
-        return redirect()->route('shop_home')->with('success', 'Le produit a bien été ajouté dans le panier');
+        ->associate('App\Product');
+        return redirect()->route('shop_cart')->with('success', 'Le produit a bien été ajouté dans le panier');
     }
 
     /**

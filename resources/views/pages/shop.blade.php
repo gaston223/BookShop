@@ -148,8 +148,8 @@
                 <div class="col-lg-3 col-md-4 col-sm-6 col-12">
                     <div class="product product__style--3">
                         <div class="product__thumb">
-                            <a class="first__img" href="{{route('shop_product_single', $product->slug)}}"><img src="{{asset('images/'.$product->image)}}" alt="product image"></a>
-                            <a class="second__img animation1" href="{{route('shop_product_single', $product->slug)}}"><img src="{{asset('images/'.$product->image)}}" alt="product image"></a>
+                            <a class="first__img" href="{{route('shop_product_single', $product->slug)}}"><img src="{{asset('storage/'.$product->image)}}" alt="product image"></a>
+                            <a class="second__img animation1" href="{{route('shop_product_single', $product->slug)}}"><img src="{{asset('storage/'.$product->image)}}" alt="product image"></a>
                             <div class="hot__box">
                                 @foreach($product->categories as $category)
                                     <span class="hot-label mb-5">{{$category->name}}</span> <br>

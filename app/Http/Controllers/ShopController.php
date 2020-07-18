@@ -2,22 +2,25 @@
 
 namespace App\Http\Controllers;
 
-use App\Products;
+use App\Product;
 use Illuminate\Contracts\Foundation\Application;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\View\View;
 
 class ShopController extends Controller
 {
+
+    /**
+     * @return Application|Factory|View
+     */
     public function home()
     {
-
         if(request()->categorie){
-          $products = Products::with('categories')->whereHas('categories', function ($query){
+          $products = Product::with('categories')->whereHas('categories', function ($query){
                 $query->where('slug', request()->categorie);
-            })->paginate(2);
+            })->orderBy('created_at', 'DESC')->paginate(4);
         }else{
-            $products = Products::with('categories')->paginate(6);
+            $products = Product::with('categories')->paginate(4);
         }
 
 
@@ -25,10 +28,10 @@ class ShopController extends Controller
     }
 
     /**
-     * @param Products $product
+     * @param Product $product
      * @return Application|Factory|View
      */
-    public function showProductSingle(Products $product)
+    public function showProductSingle(Product $product)
     {
         //$product = Products::where('slug', $slug)->first();
         return view('pages.product_single', ['product' => $product]);

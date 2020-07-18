@@ -32,7 +32,7 @@
                             <div class="col-lg-6 col-12">
                                 <div class="wn__fotorama__wrapper">
                                     <div class="fotorama wn__fotorama__action" data-nav="thumbs">
-                                        <a href="#"><img src="{{asset('images/'.$product->image)}}" alt=""></a>
+                                        <a href="#"><img src="{{asset('storage/'.$product->image)}}" alt=""></a>
                                     </div>
                                 </div>
                             </div>
@@ -53,7 +53,7 @@
                                         <span class="old_prize" style="text-decoration: line-through ">{{$product->old_price}} €</span>
                                     </div>
                                     <div class="product__overview">
-                                        {{$product->subtitile}}
+                                        {!! $product->subtitle !!}
                                     </div>
                                     <div class="box-tocart d-flex">
                                         <span>Qty</span>
@@ -119,7 +119,7 @@
                             <!-- Start Single Tab Content -->
                             <div class="pro__tab_label tab-pane fade show active" id="nav-details" role="tabpanel">
                                 <div class="description__attribute">
-                                    {{$product->description}}
+                                    {!! $product->description !!}
                                 </div>
                             </div>
                             <!-- End Single Tab Content -->

@@ -25,7 +25,7 @@ Route::get('/product_single/{product}', 'ShopController@showProductSingle')->nam
 
 
 // Routes Admin
-Route::get('/admin', [AdminController::class, 'dashboard'])->name('dashboard');
+//Route::get('/admin', [AdminController::class, 'dashboard'])->name('dashboard');
 Route::get('/create-product', [ProductsController::class, 'create'])->name('create_product');
 Route::get('/create-category', [CategoriesController::class, 'create'])->name('create_category');
 Route::post('/store-category', [CategoriesController::class, 'store'])->name('store_category');
@@ -42,3 +42,9 @@ Route::patch('/cart/{rowId}', 'CartController@update')->name('cart_update');
 Route::get('/checkout', 'CheckoutController@index')->name('shop_checkout');
 Route::post('/checkout', 'CheckoutController@store')->name('checkout_store');
 Route::get('/thanks', 'CheckoutController@thankYou')->name('checkout_thankYou');
+
+
+
+Route::group(['prefix' => 'admin'], function () {
+    Voyager::routes();
+});

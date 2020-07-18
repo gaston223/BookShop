@@ -1,7 +1,6 @@
 <?php
 
-use App\Categories;
-use App\Products;
+use App\Product;
 use Illuminate\Database\Seeder;
 use Illuminate\Support\Str;
 
@@ -15,7 +14,7 @@ class ProductsTableSeeder extends Seeder
     public function run()
     {
 
-        Products::create([
+        Product::create([
             'name' => "Manuel de l'autodidacte en informatique",
             'price' => 29.99,
             'image' => "autodidacte.jpg",
@@ -26,7 +25,7 @@ class ProductsTableSeeder extends Seeder
             rand(1,4),
             rand(1,4)
         ]);
-        Products::create([
+        Product::create([
             'name' => "Angular et Node.Js",
             'price' => 39.99,
             'image' => "angular-nodejs.jpg",
@@ -37,7 +36,7 @@ class ProductsTableSeeder extends Seeder
             rand(1,4),
             rand(1,4)
         ]);
-        Products::create([
+        Product::create([
             'name' => "La Boite à outil du Chef de projet",
             'price' => 24.99,
             'image' => "chefdeprojet.jpg",
@@ -48,7 +47,7 @@ class ProductsTableSeeder extends Seeder
             rand(1,4),
             rand(1,4)
         ]);
-        Products::create([
+        Product::create([
             'name' => "Clean Architecture",
             'price' => 49.99,
             'image' => "clean-architecture.jpg",
@@ -59,7 +58,7 @@ class ProductsTableSeeder extends Seeder
             rand(1,4),
             rand(1,4)
         ]);
-        Products::create([
+        Product::create([
             'name' => "Clean Agile",
             'price' => 35.99,
             'image' => "clean-agile.jpg",
@@ -70,7 +69,7 @@ class ProductsTableSeeder extends Seeder
             rand(1,4),
             rand(1,4)
         ]);
-        Products::create([
+        Product::create([
             'name' => "Clean Code",
             'price' => 59.99,
             'image' => "clean-code.jpg",
@@ -81,7 +80,7 @@ class ProductsTableSeeder extends Seeder
             rand(1,4),
             rand(1,4)
         ]);
-        Products::create([
+        Product::create([
             'name' => "Gestion de Projet Agile",
             'price' => 45.99,
             'image' => "methode-agile.jpg",
@@ -92,7 +91,7 @@ class ProductsTableSeeder extends Seeder
             rand(1,4),
             rand(1,4)
         ]);
-        Products::create([
+        Product::create([
             'name' => "PHP et MYSQL",
             'price' => 29.99,
             'image' => "php-mysql.jpg",
@@ -103,7 +102,7 @@ class ProductsTableSeeder extends Seeder
             rand(1,4),
             rand(1,4)
         ]);
-        Products::create([
+        Product::create([
             'name' => "Des Applications modernes avec React",
             'price' => 39.99,
             'image' => "react.jpg",

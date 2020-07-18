@@ -62,7 +62,7 @@
                                 @if(Cart::count() > 0)
                                 @foreach(Cart::content() as  $product)
                                     <tr>
-                                        <td class="product-thumbnail"><a href="#"><img src="{{asset('images/'.$product->model->image)}}" alt="product img"></a></td>
+                                        <td class="product-thumbnail"><a href="#"><img src="{{asset('storage/'.$product->model->image)}}" alt="product img"></a></td>
                                         <td class="product-name"><a href="#">{{$product->model->name}}</a></td>
                                         <td class="product-price"><span class="amount">{{$product->subtotal()}} €</span></td>
                                         <td class="product-quantity">
