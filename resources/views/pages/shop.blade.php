@@ -11,12 +11,7 @@
         <!-- Start Single Slide -->
         <div class="slide animation__style10 bg-image--1 fullscreen align__center--left">
             <div class="container">
-                @if(session('success'))
-                    <div class="alert  alert-dismissible alert-success">
-                        <button type="button" class="close" data-dismiss="alert">&times;</button>
-                        {{session('success')}}
-                    </div>
-                @endif
+
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="slider__content">
@@ -56,6 +51,22 @@
     <!-- Start BEst Seller Area -->
     <section class="wn__product__area brown--color pt--80  pb--30">
         <div class="container">
+
+            @if(session('success'))
+                <div class="alert  alert-dismissible alert-success">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{session('success')}}
+                </div>
+            @endif
+
+            @if(session('error'))
+                <div class="alert  alert-dismissible alert-error">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    {{session('error')}}
+                </div>
+            @endif
+
+
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section__title text-center">
@@ -123,6 +134,16 @@
     <!-- Start Best Seller Area -->
     <section class="wn__bestseller__area bg--white pt--80  pb--30" id="all-books">
         <div class="container">
+            @if(count($errors)>0)
+                <div class="alert  alert-dismissible alert-danger">
+                    <button type="button" class="close" data-dismiss="alert">&times;</button>
+                    <ul class="mb-0 mt-0">
+                        @foreach($errors->all() as $error)
+                            <li>{{$error}}</li>
+                        @endforeach
+                    </ul>
+                </div>
+            @endif
             <div class="row">
                 <div class="col-lg-12">
                     <div class="section__title text-center">
@@ -188,7 +209,11 @@
                 </div>
                 @endforeach
                <!-- End Single Product -->
+
             </div>
+            @if(request()->input('q'))
+                <h6>{{$products->total()}} résultat(s) pour la recherche "{{request()->q}}"</h6>
+            @endif
             {{$products->appends(request()->input())->fragment('all-books')->links()}}
         </div>
     </section>

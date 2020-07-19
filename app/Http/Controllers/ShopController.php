@@ -52,5 +52,19 @@ class ShopController extends Controller
         return view('pages.wishlist');
     }
 
+    public function search()
+    {
+        request()->validate([
+            'q' => 'required|min:3'
+        ]);
+
+        $q =  request()->input('q');
+
+       $products =  Product::where('name', 'like', "%$q%")
+                ->orWhere('description', 'like', "%$q%")
+                ->paginate(4);
+        return view('pages.shop')->with('products', $products);
+    }
+
 
 }

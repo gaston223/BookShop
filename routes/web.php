@@ -18,17 +18,11 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//Routes Shop
 Route::get('/', 'ShopController@home')->name('shop_home');
 Route::get('/wishlist', 'ShopController@wishlist')->name('shop_wishlist');
-
 Route::get('/product_single/{product}', 'ShopController@showProductSingle')->name('shop_product_single');
-
-
-// Routes Admin
-//Route::get('/admin', [AdminController::class, 'dashboard'])->name('dashboard');
-Route::get('/create-product', [ProductsController::class, 'create'])->name('create_product');
-Route::get('/create-category', [CategoriesController::class, 'create'])->name('create_category');
-Route::post('/store-category', [CategoriesController::class, 'store'])->name('store_category');
+Route::get('/search', 'ShopController@search')->name('products_search');
 
 //Routes Panier
 Route::get('/cart', 'ShopController@cart')->name('shop_cart');

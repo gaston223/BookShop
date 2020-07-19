@@ -12,14 +12,15 @@
                 <nav class="mainmenu__nav">
                     <ul class="meninmenu d-flex justify-content-start">
                         @foreach(App\Category::all() as $category)
-                            <li class="drop with--one--item"><a href="{{route('shop_home', ['categorie' => $category->slug])}}">{{$category->name}}</a></li>
+                            <li class="drop with--one--item"><a href="{{route('shop_home', ['categorie' => $category->slug])}}#all-books">{{$category->name}}</a></li>
                         @endforeach
                     </ul>
                 </nav>
             </div>
             <div class="col-md-6 col-sm-6 col-6 col-lg-2">
                 <ul class="header__sidebar__right d-flex justify-content-end align-items-center">
-                    <li class="shop_search"><a class="search__active" href="#"></a></li>
+                    <li class="shop_search">
+                        <a class="search__active" href="#"></a></li>
                     <li class="wishlist"><a href="#"></a></li>
                     <li class="shopcart"><a class="cartbox_active" href="{{route('shop_cart')}}"><span class="product_qun">{{Cart::count()}}</span></a>
                         <!-- Start Shopping Cart -->
