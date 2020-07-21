@@ -8,6 +8,7 @@ use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Contracts\View\Factory;
 use Illuminate\Http\Request;
 use Illuminate\Support\Arr;
+use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\Session;
 use Illuminate\View\View;
 use Stripe\Exception\ApiErrorException;
@@ -32,9 +33,6 @@ class CheckoutController extends Controller
         $intent = PaymentIntent::create([
             'amount' => round(Cart::total()) * 100,
             'currency' => 'eur',
-
-            // Verify your integration in this guide by including this parameter
-            'metadata' => ['userId' => 19],
         ]);
         $clientSecret = Arr::get($intent, 'client_secret');
         return view('pages.checkout',['clientSecret' => $clientSecret]);
@@ -73,14 +71,14 @@ class CheckoutController extends Controller
         $i = 0;
 
         foreach (Cart::content() as $product) {
-            $products['product_' . $i][] = $product->model->title;
+            $products['product_' . $i][] = $product->model->name;
             $products['product_' . $i][] = $product->model->price;
             $products['product_' . $i][] = $product->qty;
             $i++;
         }
 
         $order->products = serialize($products);
-        $order->user_id = 15;
+        $order->user_id = Auth()->user()->id;
         $order->save();
 
         if ($data['paymentIntent']['status'] === 'succeeded') {

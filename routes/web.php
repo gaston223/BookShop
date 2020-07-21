@@ -24,21 +24,28 @@ Route::get('/wishlist', 'ShopController@wishlist')->name('shop_wishlist');
 Route::get('/product_single/{product}', 'ShopController@showProductSingle')->name('shop_product_single');
 Route::get('/search', 'ShopController@search')->name('products_search');
 
-//Routes Panier
-Route::get('/cart', 'ShopController@cart')->name('shop_cart');
-Route::post('/panier/ajouter', 'CartController@store')->name('cart.store');
-Route::delete('/cart/{id}/', 'CartController@destroy')->name('cart.destroy');
-Route::patch('/cart/{rowId}', 'CartController@update')->name('cart_update');
 
-
-
-//Routes Paiement
-Route::get('/checkout', 'CheckoutController@index')->name('shop_checkout');
-Route::post('/checkout', 'CheckoutController@store')->name('checkout_store');
-Route::get('/thanks', 'CheckoutController@thankYou')->name('checkout_thankYou');
-
-
-
+// Routes Admin
 Route::group(['prefix' => 'admin'], function () {
     Voyager::routes();
+});
+
+Auth::routes();
+
+Route::get('/home', 'HomeController@index')->name('home');
+Route::get('/my-account', function () {
+    return view('pages.orders');
+});
+
+Route::group(['middleware' => ['auth']], function(){
+    //Routes Panier
+    Route::get('/cart', 'ShopController@cart')->name('shop_cart');
+    Route::post('/panier/ajouter', 'CartController@store')->name('cart.store');
+    Route::delete('/cart/{id}/', 'CartController@destroy')->name('cart.destroy');
+    Route::patch('/cart/{rowId}', 'CartController@update')->name('cart_update');
+
+    //Routes Paiement
+    Route::get('/checkout', 'CheckoutController@index')->name('shop_checkout');
+    Route::post('/checkout', 'CheckoutController@store')->name('checkout_store');
+    Route::get('/thanks', 'CheckoutController@thankYou')->name('checkout_thankYou');
 });
