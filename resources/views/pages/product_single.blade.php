@@ -32,7 +32,12 @@
                             <div class="col-lg-6 col-12">
                                 <div class="wn__fotorama__wrapper">
                                     <div class="fotorama wn__fotorama__action" data-nav="thumbs">
-                                        <a href="#"><img src="{{asset('storage/'.$product->image)}}" alt=""></a>
+                                        <a href="#"><img src="{{asset('storage/'.$product->image)}}" alt="image de {{$product->name}} "></a>
+                                        @if ($product->images)
+                                            @foreach(json_decode($product->images, true)  as $img)
+                                                <a href="#"><img src="{{asset('storage/'.$img)}}"  alt="image de {{$product->name}} "></a>
+                                            @endforeach
+                                        @endif
                                     </div>
                                 </div>
                             </div>
