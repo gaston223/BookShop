@@ -33,14 +33,14 @@
                     <div id="accordion" class="wn_accordion" role="tablist">
                         @foreach(Auth()->user()->orders as $order)
                             <div class="card">
-                                <div class="acc-header" role="tab" id="headingOne">
+                                <div class="acc-header" role="tab" id="{{$order->id}}">
                                     <h5>
-                                        <a data-toggle="collapse" href="#collapseOne" role="button" aria-expanded="true" aria-controls="collapseOne">
+                                        <a data-toggle="collapse" href="#collapse{{$order->id}}" role="button" aria-expanded="true" aria-controls="collapse{{$order->id}}">
                                             Commande passé le {{ \Carbon\Carbon::parse($order->payment_created_at)->format('d/m/Y à H:i') }} d'un montant de <strong>{{$order->amount /100}} €</strong>
                                         </a>
                                     </h5>
                                 </div>
-                                <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
+                                <div id="collapse{{$order->id}}" class="collapse show" role="tabpanel" aria-labelledby="{{$order->id}}" data-parent="#accordion">
                                     <div class="card-body">
                                       <h6 class="mb-2">Liste des produits : </h6>
                                         @foreach(unserialize($order->products) as $product)

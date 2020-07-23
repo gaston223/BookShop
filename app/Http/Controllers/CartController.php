@@ -96,6 +96,11 @@ class CartController extends Controller
             return response()->json(['error' => 'Cart quantity has not been updated']);
         }
 
+        if($data['qty'] > $data['stock']){
+            Session::flash('danger', "La quantité du produit n'est pas disponible");
+            return response()->json(['error' => 'Product quantity not Available']);
+        }
+
         Cart::update($rowId, $data['qty']);
 
         Session::flash('success', "La quantité du produit est passée à {$data['qty']}");

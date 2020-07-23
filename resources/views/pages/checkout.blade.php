@@ -374,6 +374,11 @@
                                     paymentIntent: paymentIntent
                                 })
                             }).then((data) => {
+                                if (data.status === 400){
+                                    var redirect = '/';
+                                }else{
+                                    var redirect = '/thanks';
+                                }
                             console.log(data);
                             form.reset();
                             window.location.href = redirect;

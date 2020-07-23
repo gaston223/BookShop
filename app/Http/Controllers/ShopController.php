@@ -34,7 +34,8 @@ class ShopController extends Controller
     public function showProductSingle(Product $product)
     {
         //$product = Products::where('slug', $slug)->first();
-        return view('pages.product_single', ['product' => $product]);
+        $stock = $product->stock === 0 ? 'Indisponible' : 'Disponible';
+        return view('pages.product_single', ['product' => $product, 'stock' => $stock]);
     }
 
     public function cart()

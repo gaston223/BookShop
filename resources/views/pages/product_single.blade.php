@@ -44,6 +44,9 @@
                             <div class="col-lg-6 col-12">
                                 <div class="product__info__main">
                                     <h1>{{$product->name}}</h1>
+                                    <div class="badge badge-pill badge-info">
+                                        {{$stock}}
+                                    </div>
                                     <div class="product-reviews-summary d-flex">
                                         <ul class="rating-summary d-flex">
                                             <li><i class="zmdi zmdi-star-outline"></i></li>
@@ -61,18 +64,20 @@
                                         {!! $product->subtitle !!}
                                     </div>
                                     <div class="box-tocart d-flex">
-                                        <span>Qty</span>
+                                        {{--<span>Qty</span>
                                         <select id="qty" data-id="{{$product->rowId}}" class="input-text qty custom-select" name="qty" min="1" value="1" title="Qty" type="number">
                                             @for($i = 1; $i<= 6; $i++ )
                                                 <option value="{{$i}}"> {{$i}} </option>
                                             @endfor
-                                        </select>
+                                        </select>--}}
                                         <div class="addtocart__actions">
-                                            <form action="{{route('cart.store')}}" method="POST">
-                                                @csrf
-                                                <input type="hidden" name="product_id" value="{{$product->id}}">
-                                                <button class="tocart" type="submit" title="Add to Cart">Ajouter au Panier</button>
-                                            </form>
+                                           @if($stock === 'Disponible')
+                                                <form action="{{route('cart.store')}}" method="POST">
+                                                    @csrf
+                                                    <input type="hidden" name="product_id" value="{{$product->id}}">
+                                                    <button class="tocart" type="submit" title="Add to Cart">Ajouter au Panier</button>
+                                                </form>
+                                            @endif
 
                                         </div>
                                         <div class="product-addto-links clearfix">
@@ -82,8 +87,9 @@
                                     </div>
                                     <div class="product_meta">
 											<span class="posted_in">Categories:
-												<a href="#">Adventure</a>,
-												<a href="#">Kids' Music</a>
+												@foreach($product->categories as $category)
+                                                    {{$category->name}} {{$loop->last ? '' : ', '}}
+                                                @endforeach
 											</span>
                                     </div>
                                     <div class="product-share">

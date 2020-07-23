@@ -66,7 +66,7 @@
                                         <td class="product-name"><a href="#">{{$product->model->name}}</a></td>
                                         <td class="product-price"><span class="amount">{{$product->subtotal()}} €</span></td>
                                         <td class="product-quantity">
-                                            <select id="qty" data-id="{{$product->rowId}}" class="input-text qty custom-select" name="qty" min="1" value="1" title="Qty" type="number">
+                                            <select id="qty" data-id="{{$product->rowId}}"  data-stock="{{$product->model->stock}}" class="input-text qty custom-select" name="qty" min="1" value="1" title="Qty" type="number">
                                                 @for($i = 1; $i<= 6; $i++ )
                                                     <option value="{{$i}}" {{ $i == $product->qty ? 'selected' : '' }}> {{$i}} </option>
                                                 @endfor
@@ -146,6 +146,7 @@
         Array.from(selects).forEach((element)=>{
             element.addEventListener('change', function () {
                 var rowId = this.getAttribute('data-id');
+                var stock = this.getAttribute('data-stock')
                 var token = document.querySelector('meta[name="csrf-token"]').getAttribute('content');
                 fetch(
                     `/cart/${rowId}`,
@@ -158,7 +159,8 @@
                         },
                         method: 'patch',
                         body: JSON.stringify({
-                            qty : this.value
+                            qty : this.value,
+                            stock: stock
                         })
                     }
                 ).then((data) => {

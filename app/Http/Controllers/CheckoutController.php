@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use App\Order;
+use App\Product;
 use DateTime;
 use Gloudemans\Shoppingcart\Facades\Cart;
 use Illuminate\Contracts\View\Factory;
@@ -56,6 +57,11 @@ class CheckoutController extends Controller
      */
     public function store(Request $request)
     {
+        if(Product::checkIfNotAvailable()){
+            Session::flash('error', "Un produit dans votre panier n'est plus disponible");
+            return response()->json(['error' => false], 400);
+        }
+
         $data = $request->json()->all();
 
         $order = new Order();
@@ -82,6 +88,7 @@ class CheckoutController extends Controller
         $order->save();
 
         if ($data['paymentIntent']['status'] === 'succeeded') {
+            Product::updateStock();
             Cart::destroy();
             Session::flash('success', 'Votre commande a été traitée avec succès.');
             return response()->json(['success' => 'Payment Intent Succeeded']);
@@ -139,4 +146,5 @@ class CheckoutController extends Controller
     {
         //
     }
+
 }
