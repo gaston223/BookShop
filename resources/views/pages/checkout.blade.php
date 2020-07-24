@@ -25,7 +25,7 @@
     <!-- Start Checkout Area -->
     <section class="wn__checkout__area section-padding--lg bg__white">
         <div class="container">
-            <div class="row">
+      {{--      <div class="row">
                 <div class="col-lg-12">
                     <div class="wn_checkout_wrap">
                         <div class="checkout_info">
@@ -55,21 +55,12 @@
                                 </div>
                             </form>
                         </div>
-                        <div class="checkout_info">
-                            <span>Have a coupon? </span>
-                            <a class="showcoupon" href="#">Click here to enter your code</a>
-                        </div>
-                        <div class="checkout_coupon">
-                            <form action="#">
-                                <div class="form__coupon">
-                                    <input type="text" placeholder="Coupon code">
-                                    <button>Apply coupon</button>
-                                </div>
-                            </form>
-                        </div>
+
                     </div>
                 </div>
-            </div>
+            </div>--}}
+
+            @include('partials.flash-message')
             <div class="row">
                 <div class="col-lg-6 col-12">
                     <div class="customer_details">
@@ -220,57 +211,86 @@
                 <div class="col-lg-6 col-12 md-mt-40 sm-mt-40">
                     <div class="wn__order__box">
 
-                        <h3 class="onder__title">Your order</h3>
+                        <h3 class="onder__title">Votre commande</h3>
                         <ul class="order__total">
-                            <li>Product</li>
+                            <li>Produits</li>
                             <li>Total</li>
                         </ul>
 
 
                         <ul class="order_product">
+                            @if(Cart::count() > 0)
+                                @foreach(Cart::content() as  $product)
+                            <li>{{$product->name}} X {{$product->qty}}<span>{{$product->subtotal}}</span></li>
+                                @endforeach
 
-                            <li>Buscipit at magna × 1<span>$48.00</span></li>
+                                    @if(!request()->session()->has('coupon'))
+
+                                        <div class="checkout_info">
+                                            <span>Vous avez un coupon ?</span>
+                                            <a class="showcoupon" href="#">Cliquez ici pour entrer votre code</a>
+                                        </div>
+                                        <div class="checkout_coupon">
+                                            <form action="{{route('store_coupon')}}" method="POST">
+                                                @csrf
+                                                <div class="form__coupon">
+                                                    <input type="text" placeholder="Coupon code" name="code">
+                                                    <button type="submit">Appliquer le coupon</button>
+                                                </div>
+                                            </form>
+                                        </div>
+
+                                    @else
+
+                                        <li>Le Coupon {{request()->session()->get('coupon')['code']}} de <strong>{{request()->session()->get('coupon')['remise'] }}€</strong> est bien appliqué
+                                            <span>
+                                                    <form action="{{route('destroy_coupon')}}" method="POST" class="d-inline-block">
+                                                    @csrf
+                                                        @method('DELETE')
+                                                    <button type="submit" style="padding: 0; border: none;background: none;">
+                                                        <i class="zmdi zmdi-delete" style="color: #0b0e19; font-size: 1.2rem; line-height: 0"></i>
+                                                    </button>
+                                                </form>
+                                                </span>
+
+                                        </li>
+                                    @endif
+                                <li><strong>Sous Total <span>{{ Cart::subtotal() - request()->session()->get('coupon')['remise'] }}  €</span> </strong></li>
+
+                                <li><strong>Taxe <span>{{ (Cart::subtotal() - request()->session()->get('coupon')['remise']) * config('cart.tax')/100 }} €</span> </strong></li>
+
+                            @endif
                         </ul>
-                        <ul class="shipping__method">
-                            <li>Cart Subtotal <span>$48.00</span></li>
-                            <li>Shipping
-                                <ul>
-                                    <li>
-                                        <input name="shipping_method[0]" data-index="0" value="legacy_flat_rate" checked="checked" type="radio">
-                                        <label>Flat Rate: $48.00</label>
-                                    </li>
-                                    <li>
-                                        <input name="shipping_method[0]" data-index="0" value="legacy_flat_rate" checked="checked" type="radio">
-                                        <label>Flat Rate: $48.00</label>
-                                    </li>
-                                </ul>
+
+
+                        <ul class="total__amount">
+                            <li> Total
+                                <span>{{$total}} €
+                                </span>
                             </li>
                         </ul>
-                        <ul class="total__amount">
-                            <li> Total <span>{{Cart::total()}} €</span></li>
-                        </ul>
-
-                        <form action="{{route('checkout_store')}}" method="POST" class="my-4" id="payment-form">
-                            @csrf
-                            <div id="card-element">
-                                <!-- Elements will create input elements here -->
-                            </div>
-
-                            <!-- We'll put the error messages in this element -->
-                            <div id="card-errors" role="alert"></div>
-
-                            <button class="btn btn-success mt-4 " id="submit">Procéder au paiement</button>
-                        </form>
                     </div>
                     <div id="accordion" class="checkout_accordion mt--30" role="tablist">
                         <div class="payment">
                             <div class="che__header" role="tab" id="headingOne">
                                 <a class="checkout__title" data-toggle="collapse" href="#collapseOne" aria-expanded="true" aria-controls="collapseOne">
-                                    <span>Direct Bank Transfer</span>
+                                    <span>Paiement par Carte bancaire</span>
                                 </a>
                             </div>
                             <div id="collapseOne" class="collapse show" role="tabpanel" aria-labelledby="headingOne" data-parent="#accordion">
-                                <div class="payment-body">Make your payment directly into our bank account. Please use your Order ID as the payment reference. Your order won’t be shipped until the funds have cleared in our account.</div>
+                                <div class="payment-body">
+                                    <form action="{{route('checkout_store')}}" method="POST" class="my-4" id="payment-form">
+                                        @csrf
+                                        <div id="card-element">
+                                            <!-- Elements will create input elements here -->
+                                        </div>
+
+                                        <!-- We'll put the error messages in this element -->
+                                        <div id="card-errors" role="alert"></div>
+
+                                        <button class="btn btn-success mt-4" id="submit">Procéder au paiement</button>
+                                    </form>
+                                </div>
                             </div>
                         </div>
                         <div class="payment">

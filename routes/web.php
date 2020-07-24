@@ -48,4 +48,6 @@ Route::group(['middleware' => ['auth']], function(){
     Route::get('/checkout', 'CheckoutController@index')->name('shop_checkout');
     Route::post('/checkout', 'CheckoutController@store')->name('checkout_store');
     Route::get('/thanks', 'CheckoutController@thankYou')->name('checkout_thankYou');
+    Route::post('/coupon', 'CheckoutController@storeCoupon')->name('store_coupon');
+    Route::delete('/coupon', 'CheckoutController@destroyCoupon')->name('destroy_coupon');
 });

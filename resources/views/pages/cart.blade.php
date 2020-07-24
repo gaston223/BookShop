@@ -88,15 +88,6 @@
                                 </tbody>
                             </table>
                         </div>
-
-                    <div class="cartbox__btn">
-                        <ul class="cart__btn__list d-flex flex-wrap flex-md-nowrap flex-lg-nowrap justify-content-between">
-                            <li><a href="#">Coupon Code</a></li>
-                            <li><a href="#">Apply Code</a></li>
-                            <li><a href="#">Update Cart</a></li>
-                            <li><a href="#">Check Out</a></li>
-                        </ul>
-                    </div>
                 </div>
             </div>
             <div class="row">

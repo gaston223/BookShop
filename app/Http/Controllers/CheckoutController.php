@@ -2,6 +2,7 @@
 
 namespace App\Http\Controllers;
 
+use App\Coupon;
 use App\Order;
 use App\Product;
 use DateTime;
@@ -30,13 +31,22 @@ class CheckoutController extends Controller
             return redirect()->route('shop_home');
         }
 
+        if (request()->session()->has('coupon')){
+            $total = (Cart::subtotal() - request()->session()->get('coupon')['remise']) + (Cart::subtotal() - request()->session()->get('coupon')['remise']) * (config('cart.tax') / 100);
+        }else{
+            $total = Cart::total();
+        }
+
         Stripe::setApiKey('sk_test_51H2h8rFJdwGaW11fl6op193HqdCwh0W6YcAvFwwDGzwlmXpOJY5UcNkOkPHnX2x3mGeVx4WwKlKK1mZdDA7RPzMx00RlvX6DSK');
         $intent = PaymentIntent::create([
-            'amount' => round(Cart::total()) * 100,
+            'amount' => round($total) * 100,
             'currency' => 'eur',
         ]);
         $clientSecret = Arr::get($intent, 'client_secret');
-        return view('pages.checkout',['clientSecret' => $clientSecret]);
+        return view('pages.checkout',[
+            'clientSecret' => $clientSecret,
+            'total' => $total
+        ]);
     }
 
     /**
@@ -97,9 +107,33 @@ class CheckoutController extends Controller
         }
     }
 
+    /**
+     * @return \Illuminate\Contracts\Foundation\Application|Factory|\Illuminate\Http\RedirectResponse|View
+     */
     public function thankYou()
     {
         return Session::has('success') ? view('pages.thank-you') : redirect()->route('shop_home');
+    }
+
+    /**
+     * @param Request $request
+     * @return \Illuminate\Http\RedirectResponse
+     */
+    public function storeCoupon(Request $request)
+    {
+        $code =$request->get('code');
+        $coupon = Coupon::where('code', $code)->first();
+
+        if (!$coupon){
+            return redirect()->back()->with('error', 'Le coupon est invalide');
+        }
+        $request->session()->put('coupon', [
+            'code' => $coupon->code,
+            'remise' => $coupon->discount(Cart::subtotal())
+        ]);
+
+
+        return redirect()->back()->with('success', 'Le coupon est appliqué');
     }
 
     /**
@@ -145,6 +179,13 @@ class CheckoutController extends Controller
     public function destroy($id)
     {
         //
+    }
+
+    public function destroyCoupon()
+    {
+        request()->session()->forget('coupon');
+
+        return redirect()->back()->with('success', 'Le coupon a été retiré');
     }
 
 }
