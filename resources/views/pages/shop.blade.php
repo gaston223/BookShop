@@ -67,14 +67,14 @@
             @endif
 
 
-            <div class="row">
+            {{--<div class="row">
                 <div class="col-lg-12">
                     <div class="section__title text-center">
                         <h2 class="title__be--2">Les Derniers <span class="color--theme">Livres</span></h2>
                         <p>There are many variations of passages of Lorem Ipsum available, but the majority have suffered lebmid alteration in some ledmid form</p>
                     </div>
                 </div>
-            </div>
+            </div>--}}
             <!-- Start Single Tab Content -->
 
             <!-- Start Single Product -->
@@ -155,7 +155,7 @@
             <div class="row mt--50">
                 <div class="col-md-12 col-lg-12 col-sm-12">
                     <div class="product__nav nav justify-content-center" role="tablist">
-                        <a class="nav-item nav-link active" data-toggle="tab" href="{{route('shop_home')}}#all-books" role="tab">ALL</a>
+                        <a class="nav-item nav-link active"  href="{{route('shop_home')}}#all-books" role="tab">TOUS</a>
                         @foreach(DB::table('categories')->get() as $category)
                         <a class="nav-item nav-link" href="{{route('shop_home', ['categorie' => $category->slug])}}#all-books">{{$category->name}}</a>
                         @endforeach

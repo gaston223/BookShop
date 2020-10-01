@@ -20,68 +20,10 @@
             <div class="col-md-6 col-sm-6 col-6 col-lg-2">
                 <ul class="header__sidebar__right d-flex justify-content-end align-items-center">
                     <li class="shop_search">
-                        <a class="search__active" href="#"></a></li>
-                    <li class="wishlist"><a href="#"></a></li>
-                    <li class="shopcart"><a class="cartbox_active" href="{{route('shop_cart')}}"><span class="product_qun">{{Cart::count()}}</span></a>
-                        <!-- Start Shopping Cart -->
-                        <div class="block-minicart minicart__active">
-                            <div class="minicart-content-wrapper">
-                                <div class="micart__close">
-                                    <span>close</span>
-                                </div>
-                                <div class="items-total d-flex justify-content-between">
-                                    <span>3 items</span>
-                                    <span>Cart Subtotal</span>
-                                </div>
-                                <div class="total_amount text-right">
-                                    <span>$66.00</span>
-                                </div>
-                                <div class="mini_action checkout">
-                                    <a class="checkout__btn" href="{{route('shop_cart')}}">Voir le panier</a>
-                                </div>
-                                <div class="single__items">
-                                    <div class="miniproduct">
-                                        <div class="item01 d-flex">
-                                            <div class="thumb">
-                                                <a href="product-details.html"><img src="images/product/sm-img/1.jpg" alt="product images"></a>
-                                            </div>
-                                            <div class="content">
-                                                <h6><a href="product-details.html">Voyage Yoga Bag</a></h6>
-                                                <span class="prize">$30.00</span>
-                                                <div class="product_prize d-flex justify-content-between">
-                                                    <span class="qun">Qty: 01</span>
-                                                    <ul class="d-flex justify-content-end">
-                                                        <li><a href="#"><i class="zmdi zmdi-settings"></i></a></li>
-                                                        <li><a href="#"><i class="zmdi zmdi-delete"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-                                        <div class="item01 d-flex mt--20">
-                                            <div class="thumb">
-                                                <a href="product-details.html"><img src="images/product/sm-img/3.jpg" alt="product images"></a>
-                                            </div>
-                                            <div class="content">
-                                                <h6><a href="product-details.html">Impulse Duffle</a></h6>
-                                                <span class="prize">$40.00</span>
-                                                <div class="product_prize d-flex justify-content-between">
-                                                    <span class="qun">Qty: 03</span>
-                                                    <ul class="d-flex justify-content-end">
-                                                        <li><a href="#"><i class="zmdi zmdi-settings"></i></a></li>
-                                                        <li><a href="#"><i class="zmdi zmdi-delete"></i></a></li>
-                                                    </ul>
-                                                </div>
-                                            </div>
-                                        </div>
-
-                                    </div>
-                                </div>
-                                <div class="mini_action cart">
-                                    <a class="cart__btn" href="cart.html">View and edit cart</a>
-                                </div>
-                            </div>
-                        </div>
-                        <!-- End Shopping Cart -->
+                        <a class="search__active" href="#"></a>
+                    </li>
+                    {{--<li class="wishlist"><a href="#"></a></li>--}}
+                    <li class="shopcart"><a href="{{route('shop_cart')}}"><span class="product_qun">{{Cart::count()}}</span></a>
                     </li>
 
                     <li class="setting__bar__icon"><a class="setting__active" href="#"></a>
@@ -95,8 +37,7 @@
                                     <div class="switcher-options">
                                         <div class="switcher-currency-trigger">
                                             <div class="setting__menu">
-                                                <span><a href="{{url('/my-account')}}">Mes commandes</a></span>
-                                                <span><a href="#">My Wishlist</a></span>
+                                                {{--<span><a href="#">My Wishlist</a></span>--}}
                                                 <ul>
                                                     @include('partials.auth')
                                                 </ul>
